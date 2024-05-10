@@ -4,18 +4,25 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>
-// );
+import { Provider } from "react-redux";
+import store from "./store";
+import { Toaster } from "react-hot-toast";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
-    <App />
+    <Provider store={store}>
+      <App />
+      <Toaster
+        toastOptions={{
+          position: "top-right",
+          style: {
+            background: "#FFFFFF",
+            color: "white",
+          },
+        }}
+      />
+    </Provider>
   </BrowserRouter>
 );
 
