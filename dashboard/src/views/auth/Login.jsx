@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const Login = () => {
+  const [state, setState] = useState({ email: "", password: "" });
+
+  const inputHandle = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const submit = (e) => {
+    e.preventDefault();
+    console.log(state);
+  };
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -17,7 +31,12 @@ const Login = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form
+            onSubmit={submit}
+            className="space-y-6"
+            action="#"
+            method="POST"
+          >
             <div>
               <label
                 htmlFor="email"
@@ -27,6 +46,8 @@ const Login = () => {
               </label>
               <div className="mt-2">
                 <input
+                  onChange={inputHandle}
+                  value={state.email}
                   id="email"
                   name="email"
                   type="email"
@@ -56,6 +77,8 @@ const Login = () => {
               </div>
               <div className="mt-2">
                 <input
+                  onChange={inputHandle}
+                  value={state.password}
                   id="password"
                   name="password"
                   type="password"
