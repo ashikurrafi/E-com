@@ -1,9 +1,18 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { admin_login } from "../../store/Reducers/authReducer";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { admin_login, messageClear } from "../../store/Reducers/authReducer";
+import { BarLoader } from "react-spinners";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
+
+  const { loader, errorMessage, successMessage } = useSelector(
+    (state) => state.auth
+  );
 
   const [state, setState] = useState({ email: "", password: "" });
 
@@ -20,6 +29,18 @@ const AdminLogin = () => {
 
     console.log(state);
   };
+
+  useEffect(() => {
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear());
+    }
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+      navigate("/"); // Assuming `navigate` is a function available in scope
+    }
+  }, [dispatch, errorMessage, successMessage, navigate]);
 
   return (
     <>
@@ -96,23 +117,14 @@ const AdminLogin = () => {
 
             <div>
               <button
+                disabled={loader ? true : false}
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Login
+                {loader ? <BarLoader /> : "Login"}
               </button>
             </div>
           </form>
-
-          {/* <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?{" "}
-            <NavLink
-              to="/register"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-            >
-              Register here
-            </NavLink>
-          </p> */}
         </div>
       </div>
     </>
