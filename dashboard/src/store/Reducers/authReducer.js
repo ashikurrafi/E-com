@@ -3,12 +3,13 @@ import api from "./../../api/api";
 
 export const admin_login = createAsyncThunk(
   "auth/admin_login",
-  async (info, { rejectWithValue }) => {
+  async (info, { rejectWithValue, fulfillWithValue }) => {
     try {
       const { data } = await api.post("/admin-login", info, {
         withCredentials: true,
       });
-      return data;
+      localStorage.setItem("accessToken", data.token);
+      return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
