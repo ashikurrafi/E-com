@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
 const Register = () => {
-  const [state, setState] = useState({
+  const [state, setSatate] = useState({
     name: "",
     email: "",
     password: "",
   });
-
   const inputHandle = (e) => {
-    setState({
+    setSatate({
       ...state,
       [e.target.name]: e.target.value,
     });
@@ -24,23 +24,23 @@ const Register = () => {
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
             alt="Your Company"
+            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+            className="mx-auto h-10 w-auto"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Create an account
+            Register your account
           </h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={submit}>
+          <form onSubmit={submit} className="space-y-6">
             <div>
               <label
                 htmlFor="name"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Name
+                Your name
               </label>
               <div className="mt-2">
                 <input
@@ -49,14 +49,11 @@ const Register = () => {
                   id="name"
                   name="name"
                   type="text"
-                  autoComplete="name"
-                  placeholder="Name"
                   required
-                  className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
-
             <div>
               <label
                 htmlFor="email"
@@ -71,23 +68,20 @@ const Register = () => {
                   id="email"
                   name="email"
                   type="email"
-                  autoComplete="email"
-                  placeholder="Email"
                   required
-                  className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  autoComplete="email"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
 
             <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Password
-                </label>
-              </div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Password
+              </label>
               <div className="mt-2">
                 <input
                   onChange={inputHandle}
@@ -95,32 +89,29 @@ const Register = () => {
                   id="password"
                   name="password"
                   type="password"
-                  placeholder="Password"
-                  autoComplete="current-password"
                   required
-                  className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  autoComplete="current-password"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
 
-            <div className="flex items-center">
-              <input
-                id="privacy-policy"
-                type="checkbox"
-                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-              />
-              <label
-                htmlFor="privacy-policy"
-                className="ml-2 block text-sm text-gray-900"
-              >
-                I agree to the{" "}
-                <NavLink
-                  to="#"
-                  className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            <div>
+              <div className="flex items-center gap-x-3">
+                <input
+                  id="agree"
+                  name="agree"
+                  type="checkbox"
+                  required
+                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                />
+                <label
+                  htmlFor="agree"
+                  className="text-sm font-medium leading-6 text-gray-900"
                 >
-                  Privacy Policy
-                </NavLink>
-              </label>
+                  I agree to the terms and conditions
+                </label>
+              </div>
             </div>
 
             <div>
@@ -133,14 +124,18 @@ const Register = () => {
             </div>
           </form>
 
+          {/* <p className="mt-10 text-center text-sm text-gray-500">
+            Not a member? Please register
+          </p> */}
           <p className="mt-10 text-center text-sm text-gray-500">
-            Already have an account ?{" "}
-            <NavLink
+            Not a member ? Please register
+            <br /> Already have an account ?{" "}
+            <Link
               to="/login"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
-              Sign in
-            </NavLink>
+              Please login
+            </Link>
           </p>
         </div>
       </div>
