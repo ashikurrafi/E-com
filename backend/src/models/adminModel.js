@@ -5,8 +5,6 @@ const adminSchema = new Schema({
   name: {
     type: String,
     required: true,
-    lowercase: true,
-    trim: true,
     index: true,
   },
   email: {
@@ -31,4 +29,4 @@ const adminSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("Admin", adminSchema);
+module.exports = mongoose.model("admins", adminSchema);
