@@ -1,8 +1,8 @@
-const router = require("express").Router();
-const authControllers = require("../controller/authControllers");
-const { authMiddleware } = require("../middleware/authMiddleware");
+const express = require("express");
+const { adminLogin } = require("../controller/authControllers"); // Fixed the path and name
 
-router.post("/admin-login", authControllers.admin_login);
-router.get("/get-user", authMiddleware, authControllers.getUser);
+const router = express.Router();
+
+router.route("/admin-login").post(adminLogin);
 
 module.exports = router;
