@@ -1,7 +1,11 @@
 import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
+
+import { Toaster } from "react-hot-toast";
+import store from "./store/index";
+import { Provider } from "react-redux";
+
 import "./index.css";
-// import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 const App = lazy(() => import("./App"));
@@ -9,14 +13,21 @@ const App = lazy(() => import("./App"));
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
-    <Suspense fallback="Please wait ...">
-      <App />
-    </Suspense>
+    <Provider store={store}>
+      <Suspense fallback="Please wait ...">
+        <App />
+        <Toaster
+          toastOptions={{
+            position: "top-right",
+            style: {
+              background: "white",
+              color: "black",
+            },
+          }}
+        />
+      </Suspense>
+    </Provider>
   </BrowserRouter>
-
-  // <React.StrictMode>
-  //   <App />
-  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
