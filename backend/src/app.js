@@ -1,7 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
-const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
 const app = express();
@@ -15,7 +14,7 @@ app.use(
   })
 );
 
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api", require("./routes/authRoutes"));

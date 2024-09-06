@@ -1,6 +1,8 @@
+const adminModel = require("../models/adminModel");
+
 const adminLogin = async (req, res) => {
+  console.log("Admin login");
   console.log(req.body);
-  res.status(200).json({ message: "Admin login request received." });
 };
 
 module.exports = { adminLogin };
