@@ -1,16 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { admin_login } from "../../store/Reducers/authReducer";
+import { admin_login, messageClear } from "../../store/Reducers/authReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const AdminLogin = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [state, setSatate] = useState({
+  const { loader, errorMessage, successMessage } = useSelector(
+    (state) => state.auth
+  );
+
+  const [state, setState] = useState({
     email: "",
     password: "",
   });
   const inputHandle = (e) => {
-    setSatate({
+    setState({
       ...state,
       [e.target.name]: e.target.value,
     });
@@ -21,6 +28,19 @@ const AdminLogin = () => {
     dispatch(admin_login(state));
     console.log(state);
   };
+
+  useEffect(() => {
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear());
+    }
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+      navigate("/");
+    }
+  }, [errorMessage, successMessage, dispatch, navigate]);
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -91,10 +111,11 @@ const AdminLogin = () => {
 
             <div>
               <button
+                disabled={loader ? true : false}
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign in
+                {loader ? "Loading..." : "Sign in"}
               </button>
             </div>
           </form>

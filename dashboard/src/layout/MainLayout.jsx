@@ -1,8 +1,18 @@
+import Header from "./Header";
+import Sidebar from "./Sidebar";
+import { Outlet } from "react-router-dom";
+
 const MainLayout = () => {
   return (
-    <div>
-      <h1>Main Layout</h1>
-    </div>
+    <>
+      <div className="bg-[#161d31] w-full min-h-screen">
+        <Header />
+        <Sidebar />
+        <div className="ml-0 lg:ml-[260px] pt-[95px] transition-all">
+          <Outlet />
+        </div>
+      </div>
+    </>
   );
 };
 
