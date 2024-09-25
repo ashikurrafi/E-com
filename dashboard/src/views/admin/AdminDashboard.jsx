@@ -1,4 +1,3 @@
-import React from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
