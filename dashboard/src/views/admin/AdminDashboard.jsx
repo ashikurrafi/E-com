@@ -174,11 +174,11 @@ const AdminDashboard = () => {
                       <div className="flex justify-between items-center mb-2">
                         <Link className="text-md font-normal">Admin</Link>
                         <time className="mb-1 text-sm font-normal sm:order-last sm:mb-0">
-                          4 min ago{" "}
+                          4 min ago
                         </time>
                       </div>
                       <div className="p-2 text-xs font-normal bg-slate-700 rounded-lg border border-slate-800">
-                        How are you ?{" "}
+                        How are you ?
                       </div>
                     </div>
                   </li>
@@ -194,11 +194,11 @@ const AdminDashboard = () => {
                       <div className="flex justify-between items-center mb-2">
                         <Link className="text-md font-normal">Admin</Link>
                         <time className="mb-1 text-sm font-normal sm:order-last sm:mb-0">
-                          4 min ago{" "}
+                          4 min ago
                         </time>
                       </div>
                       <div className="p-2 text-xs font-normal bg-slate-700 rounded-lg border border-slate-800">
-                        How are you ?{" "}
+                        How are you ?
                       </div>
                     </div>
                   </li>
@@ -214,7 +214,7 @@ const AdminDashboard = () => {
                       <div className="flex justify-between items-center mb-2">
                         <Link className="text-md font-normal">Admin</Link>
                         <time className="mb-1 text-sm font-normal sm:order-last sm:mb-0">
-                          4 min ago{" "}
+                          4 min ago
                         </time>
                       </div>
                       <div className="p-2 text-xs font-normal bg-slate-700 rounded-lg border border-slate-800">

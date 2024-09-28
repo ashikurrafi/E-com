@@ -8,7 +8,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
   const [allNavItems, setAllNavItems] = useState([]);
 
   useEffect(() => {
-    const role = "admin";
+    const role = "seller";
     const filteredNavs = allNav.filter((nav) => nav.role === role);
     setAllNavItems(filteredNavs);
   }, []);
