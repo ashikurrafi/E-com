@@ -1,7 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { messageClear, seller_login } from "../../store/Reducers/authReducer";
+import toast from "react-hot-toast";
 
 const Login = () => {
+  const dispatch = useDispatch();
+
+  const { loader, errorMessage, successMessage } = useSelector(
+    (state) => state.auth
+  );
+
   const [state, setSatate] = useState({
     email: "",
     password: "",
@@ -15,8 +24,20 @@ const Login = () => {
 
   const submit = (e) => {
     e.preventDefault();
-    console.log(state);
+    dispatch(seller_login(state));
   };
+
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+    }
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear());
+    }
+  }, [successMessage, errorMessage, dispatch]);
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -87,10 +108,11 @@ const Login = () => {
 
             <div>
               <button
+                disabled={loader ? true : false}
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign in
+                {loader ? "Loading..." : "Sign in"}
               </button>
             </div>
           </form>

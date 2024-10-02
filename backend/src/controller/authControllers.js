@@ -86,4 +86,44 @@ const sellerRegister = async (req, res) => {
   }
 };
 
-module.exports = { adminLogin, getUser, sellerRegister };
+const sellerLogin = async (req, res) => {
+  const { email, password } = req.body;
+
+  // Input validation
+  if (!email || !password) {
+    return responseReturn(res, 400, {
+      error: "Email and password are required",
+    });
+  }
+
+  try {
+    const seller = await sellerModel.findOne({ email }).select("+password");
+
+    if (seller) {
+      const match = await bcrypt.compare(password, seller.password);
+      if (match) {
+        const token = await createToken({ id: seller.id, role: seller.role });
+
+        // Set secure cookies in production
+        res.cookie("accessToken", token, {
+          // httpOnly: true,
+          // secure: process.env.NODE_ENV === "production", // Enable secure cookies in production
+          expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        });
+
+        return responseReturn(res, 200, { token, message: "Login success" });
+      } else {
+        console.error(`Login failed for email: ${email}. Incorrect password.`);
+        return responseReturn(res, 403, { error: "Incorrect password" });
+      }
+    } else {
+      console.warn(`Login attempt for non-existent email: ${email}`);
+      return responseReturn(res, 404, { error: "Email not found" });
+    }
+  } catch (error) {
+    console.error("Error during seller login:", error.message);
+    return responseReturn(res, 500, { error: "Internal server error" });
+  }
+};
+
+module.exports = { adminLogin, getUser, sellerRegister, sellerLogin };
