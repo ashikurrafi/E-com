@@ -19,6 +19,24 @@ export const admin_login = createAsyncThunk(
   }
 );
 
+export const seller_register = createAsyncThunk(
+  "auth/seller_register",
+  async (info, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      console.log(info);
+      const { data } = await api.post("/seller-register", info, {
+        withCredentials: true,
+      });
+      localStorage.setItem("accessToken", data.token);
+      console.log(data);
+      return fulfillWithValue(data);
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const authReducer = createSlice({
   name: "auth",
   initialState: {
@@ -44,6 +62,20 @@ export const authReducer = createSlice({
         state.successMessage = action.payload.message;
       })
       .addCase(admin_login.rejected, (state, action) => {
+        state.loader = false;
+        state.errorMessage = action.payload
+          ? action.payload.error
+          : "An error occurred";
+      })
+      .addCase(seller_register.pending, (state) => {
+        state.loader = true;
+      })
+      .addCase(seller_register.fulfilled, (state, action) => {
+        state.loader = false;
+        state.userInfo = action.payload.user;
+        state.successMessage = action.payload.message;
+      })
+      .addCase(seller_register.rejected, (state, action) => {
         state.loader = false;
         state.errorMessage = action.payload
           ? action.payload.error

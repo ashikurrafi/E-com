@@ -24,7 +24,7 @@ const AddProduct = () => {
 
   const [imageShow, setImageShow] = useState([]);
 
-  const inmageHandle = (e) => {
+  const imageHandle = (e) => {
     const files = e.target.files;
     console.log(files);
     const length = files.length;
@@ -262,7 +262,7 @@ const AddProduct = () => {
             </label>
             <input
               className="hidden"
-              onChange={inmageHandle}
+              onChange={imageHandle}
               multiple
               type="file"
               id="image"

@@ -2,6 +2,8 @@ const adminModel = require("../models/adminModel");
 const { responseReturn } = require("../utils/response");
 const bcrypt = require("bcryptjs");
 const { createToken } = require("../utils/tokenCreate");
+const sellerModel = require("../models/sellerModel");
+const sellerCustomerModel = require("../models/chat/sellerCustomerModel");
 
 const adminLogin = async (req, res) => {
   const { email, password } = req.body;
@@ -51,4 +53,37 @@ const getUser = async (req, res) => {
   }
 };
 
-module.exports = { adminLogin, getUser };
+const sellerRegister = async (req, res) => {
+  const { email, name, password } = req.body;
+  try {
+    const existingSeller = await sellerModel.findOne({ email });
+    if (existingSeller) {
+      return responseReturn(res, 400, { error: "Email already exists" });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const seller = await sellerModel.create({
+      name,
+      email,
+      password: hashedPassword,
+      method: "manually",
+      shopInfo: {},
+    });
+
+    console.log(seller);
+
+    await sellerCustomerModel.create({
+      myId: seller.id,
+    });
+
+    const token = createToken({ id: seller.id, role: seller.role });
+    res.cookie("accessToken", token, {
+      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    });
+    responseReturn(res, 201, { token, message: "Registration successful" });
+  } catch (error) {
+    console.error("Error during seller registration:", error.message);
+    responseReturn(res, 500, { error: "Internal server error" });
+  }
+};
+
+module.exports = { adminLogin, getUser, sellerRegister };

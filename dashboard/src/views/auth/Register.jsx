@@ -1,7 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  messageClear,
+  seller_register,
+} from "../../store/Reducers/authReducer";
+import { toast } from "react-hot-toast";
 
 const Register = () => {
+  const dispatch = useDispatch();
+
+  const { loader, successMessage, errorMessage } = useSelector(
+    (state) => state.auth
+  );
+
   const [state, setSatate] = useState({
     name: "",
     email: "",
@@ -16,8 +28,19 @@ const Register = () => {
 
   const submit = (e) => {
     e.preventDefault();
-    console.log(state);
+    dispatch(seller_register(state));
   };
+
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+    }
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear());
+    }
+  }, [successMessage, errorMessage, dispatch]);
 
   return (
     <>
@@ -116,17 +139,15 @@ const Register = () => {
 
             <div>
               <button
+                disabled={loader ? true : false}
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Register
+                {loader ? "Loading..." : "Register"}
               </button>
             </div>
           </form>
 
-          {/* <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member? Please register
-          </p> */}
           <p className="mt-10 text-center text-sm text-gray-500">
             Not a member ? Please register
             <br /> Already have an account ?
