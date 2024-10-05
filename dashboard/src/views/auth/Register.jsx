@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   messageClear,
@@ -8,6 +8,8 @@ import {
 import { toast } from "react-hot-toast";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const { loader, successMessage, errorMessage } = useSelector(
@@ -35,6 +37,7 @@ const Register = () => {
     if (successMessage) {
       toast.success(successMessage);
       dispatch(messageClear());
+      navigate("/");
     }
     if (errorMessage) {
       toast.error(errorMessage);

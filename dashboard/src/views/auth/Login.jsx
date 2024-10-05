@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { messageClear, seller_login } from "../../store/Reducers/authReducer";
 import toast from "react-hot-toast";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const { loader, errorMessage, successMessage } = useSelector(
@@ -31,6 +33,7 @@ const Login = () => {
     if (successMessage) {
       toast.success(successMessage);
       dispatch(messageClear());
+      navigate("/");
     }
     if (errorMessage) {
       toast.error(errorMessage);

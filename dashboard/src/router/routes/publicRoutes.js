@@ -9,7 +9,13 @@ const publicRoutes = [
   {
     path: "/",
     element: <Home />,
+    ability: ["admin", "seller"],
   },
+
+  // {
+  //   path: "/",
+  //   element: <Home />,
+  // },
   {
     path: "/login",
     element: <Login />,

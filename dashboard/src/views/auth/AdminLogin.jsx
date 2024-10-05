@@ -39,7 +39,7 @@ const AdminLogin = () => {
       dispatch(messageClear());
       navigate("/");
     }
-  }, [errorMessage, successMessage, dispatch, navigate]);
+  }, [errorMessage, successMessage]);
 
   return (
     <>

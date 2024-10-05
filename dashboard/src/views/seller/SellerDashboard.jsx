@@ -1,6 +1,5 @@
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsCurrencyDollar } from "react-icons/bs";
-import { FaUsers } from "react-icons/fa";
 import { RiProductHuntLine } from "react-icons/ri";
 import Chart from "react-apexcharts";
 import { Link } from "react-router-dom";
